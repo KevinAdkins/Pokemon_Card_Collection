@@ -1,0 +1,259 @@
+body {
+  margin: 0;
+  background: radial-gradient(circle at center, #1a1a2e, #0b0b15);
+  min-height: 100vh;
+  padding-top: 24px; /* spacing from the very top */
+  display: block;    /* stop global centering from affecting header */
+  font-family: 'Lexend', sans-serif;
+  color: white;
+}
+
+/* Header & Navbar */
+.header-row {
+  position: sticky; /* keeps it in view as you scroll past a certain point */
+  top: 0;           /* sticks to the top of the viewport */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centers the search bar horizontally */
+  margin-bottom: 0px; /* space between header and cards */
+  /* dimmed state */
+  background: linear-gradient(180deg, rgba(11,11,21,0.65), rgba(11,11,21,0.25) 70%, transparent); /* make initial background dimmer */
+  backdrop-filter: blur(6px);
+  padding: 8px 0 12px;
+  /* add transition for smooth dimming */
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  z-index: 1000; /* ensure it's above other content */
+}
+
+/* Make header background and blur fully visible when hovered */
+.header-row:hover {
+  background: linear-gradient(180deg, rgba(11,11,21,0.85), rgba(11,11,21,0.35) 70%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.page{
+  padding-top: 25px;
+}
+
+/* Left-only nav that touches the left edge of the page */
+.nav-left-only {
+  position: fixed;
+  top: 0;              
+  left: 0;             
+  background: rgba(255, 255, 255, 0.10);
+  padding: 12px 24px;
+  border-radius: 0 12px 12px 0;  
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  z-index: 1001;
+}
+
+/* title text inside the left nav */
+.title {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+/* center the search bar across the page */
+.search-form {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 6px;
+}
+
+/* Search */
+.search {
+  --padding: 14px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--padding);
+  border-radius: 28px;
+  background: #f6f6f6;
+  transition: box-shadow 0.25s;
+  width: min(500px, 70%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  transition: opacity .3s ease, box-shadow .25s ease;
+}
+
+body.scrolled .search{
+  opacity: 0.5;
+}
+
+body.scrolled .header-row{
+  background: linear-gradient(180deg, rgba(11,11,21,0.65), rgba(11,11,21,0.25) 70%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+/* Dim the hint text when scrolled */
+body.scrolled .hint {
+  opacity: 0.25;
+}
+
+.search:hover,
+.search:focus-within{
+  opacity: 1;
+  box-shadow: 0 0 20px rgb(0, 238, 255);
+}
+
+.search:hover .hint,
+.search:focus-within .hint {
+    opacity: 1;
+}
+
+.search-input {
+  font-size: 16px;
+  color: #333333;
+  margin-left: var(--padding);
+  outline: none;
+  border: none;
+  background: transparent;
+  flex: 1;
+}
+
+.hint{
+  position: absolute;
+  top: 100%;   /* below the input */
+  left: 18px;  /* align with input text */
+  margin-top: 10px;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  opacity: 0.45;
+  color: #fff;
+  pointer-events: none;
+}
+
+.search-input::placeholder,
+.search-icon {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Card Layout */
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(280px, 1fr));
+  gap: 25px;
+  align-items: start;
+  justify-items: center;
+  width: 100%;
+  padding: 40px 60px;
+  margin: 0 auto;
+  max-width: 1600px;
+  box-sizing: border-box;
+}
+
+/* Card styling */
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 63 / 88; /* pokemon card size */
+  overflow: hidden;
+  perspective: 1000px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  transform-style: preserve-3d;
+  transform: rotateX(12deg) rotateY(-10deg) scale(0.95);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* Image fills the card */
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+}
+
+/* Hover: lift up and straighten */
+.card:hover {
+  transform: rotateX(0deg) rotateY(0deg) scale(1);
+  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* shiny highlight glossy */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(130deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 24px;
+}
+
+.lightbox.open { display: flex; }
+
+.lightbox img {
+  max-width: 95vw;
+  max-height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.6);
+  cursor: zoom-out;
+}
+
+.lightbox .caption {
+  margin-top: 10px;
+  color: #eee;
+  text-align: center;
+  font-size: 14px;
+}
+
+.lightbox .prev,
+.lightbox .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  padding: 10px;
+  z-index: 2001;
+  opacity: 0.4;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.lightbox .prev,
+.lightbox .next {
+  opacity: 1;
+}
+
+.lightbox .prev:hover,
+.lightbox .next:hover {
+  color: #6FA9C8;
+}
+
+.lightbox .prev { left: 20px; }
+.lightbox .next { right: 20px; }
+
+.lightbox .close {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+  z-index: 2001;
+  transition: color 0.3s ease;
+}
+
+.lightbox .close:hover { color: #6FA9C8; }

@@ -33,3 +33,39 @@ input{
 .hide{
     display: none;
 }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .user-cards {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .card {
+    padding: 0.4rem;
+    border-radius: 10px;
+  }
+
+  input {
+    font-size: 0.9rem;
+  }
+
+  .card > .body {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+
+  .card {
+    padding: 0.3rem;
+  }
+
+  input {
+    font-size: 0.8rem;
+  }
+}

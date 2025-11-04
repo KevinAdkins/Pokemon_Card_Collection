@@ -139,4 +139,34 @@ function closeLB() { // function to close the lightbox
     e.preventDefault(); // stops the normal form submit behavior
     filterCards(input.value); // runs the filter with the current search text
   });
+
+  // Mobile swipe support in lightbox
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  lb.addEventListener('touchstart', (e) => {
+   if (!lb.classList.contains('open')) return;
+    const t = e.touches[0];
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+  }, { passive: true });
+
+  lb.addEventListener('touchend', (e) => {
+    if (!lb.classList.contains('open')) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 40 && Math.abs(dy) < 50) {
+     if (dx < 0) { currentIndex = (currentIndex + 1) % images.length; }
+     else { currentIndex = (currentIndex - 1 + images.length) % images.length; }
+      showImage(currentIndex);
+    }
+  }, { passive: true });
+
+  // Make arrows and close easier to tap (increase hit area)
+  [nextBtn, prevBtn, closeBtn].forEach(el => {
+   el.style.touchAction = 'manipulation';
+    el.style.minWidth = '44px';
+    el.style.minHeight = '44px';
+  });
+  
 })(); // immediately runs this entire function when the page loads

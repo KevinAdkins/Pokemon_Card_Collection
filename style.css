@@ -412,61 +412,65 @@ body.scrolled .hint {
 /* Higher placeholder contrast for readability */
 .search-input::placeholder { color: rgba(0,0,0,0.65); }
 
-/* Mobile navbar fix */
 :root{
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* Phones & small tablets */
 @media (max-width: 768px) {
-  /* Keep the header below the iPhone notch and make it fully opaque */
-  .header-row {
-    position: sticky;
+  /* Solid, safe header below the notch with even spacing */
+  .header-row{
+    position: sticky;               /* you already use sticky */
     top: 0;
+    z-index: 1002;
     padding-top: calc(12px + var(--safe-top));
     padding-bottom: 12px;
-    background: rgba(11, 11, 21, 0.95) !important;
+    padding-left: 12px;
+    padding-right: 12px;
+    background: rgba(11,11,21,0.96) !important;  /* no show-through */
     backdrop-filter: blur(12px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-    z-index: 1002;
+    display: flex;                  /* lay items out in a row */
+    align-items: center;
+    justify-content: space-between; /* equal spacing across row */
+    gap: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.35);
   }
 
-  /* Hide the left-edge nav on small screens */
-  .nav-left-only {
+  /* Side navs cause the overlap on phones—hide them there */
+  .nav-left-only,
+  .nav-right-only{
     display: none !important;
   }
 
-  /* Keep search centered and within screen width */
-  .search-form {
-    width: 100%;
-    padding: 0 12px;
-    box-sizing: border-box;
+  /* Make the search fill the middle evenly and not overflow */
+  .search-form{
+    flex: 1;                 /* share space evenly */
+    min-width: 0;            /* allow shrinking within the row */
   }
-
-  .search {
-    width: clamp(240px, 92vw, 560px);
+  .search{
+    width: 100%;             /* full width inside the flex area */
+    max-width: none;
     border-radius: 16px;
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 6px 14px rgba(0,0,0,.35);
   }
 
-  .hint {
-    left: 16px;
-    margin-top: 8px;
-    font-size: 0.9rem;
-    opacity: 0.8;
+  /* Keep the hint from overlapping cards; move it below input */
+  .hint{
+    position: static;
+    margin: 6px 0 0;
+    font-size: .95rem;
+    line-height: 1.25;
+    opacity: .8;
   }
 
-  /* Ensure cards start below sticky header */
+  /* Ensure content never slides under the sticky header */
   .page,
-  .card-row {
+  .card-row{
     padding-top: calc(16px + var(--safe-top));
   }
 }
 
-/* Small phones */
-@media (max-width: 420px) {
-  .search {
-    width: 94vw;
-  }
+/* Very small phones tighten width slightly */
+@media (max-width: 420px){
+  .search{ width: 100%; }
 }

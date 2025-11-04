@@ -777,14 +777,6 @@
           <div class="caption" id="lightbox-cap"></div>
         </div>
       </div>
-      <script>
-        // Faster mobile loads
-        document.querySelectorAll(".card img").forEach((img) => {
-          if (!img.hasAttribute("loading")) img.setAttribute("loading", "lazy");
-          // Decode early for smoother lightbox
-          if ("decode" in img) img.decode().catch(() => {});
-        });
-      </script>
       <script src="lightbox.js"></script>
       <script src="search.js"></script>
     </main>

@@ -411,3 +411,62 @@ body.scrolled .hint {
 
 /* Higher placeholder contrast for readability */
 .search-input::placeholder { color: rgba(0,0,0,0.65); }
+
+/* Mobile navbar fix */
+:root{
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Phones & small tablets */
+@media (max-width: 768px) {
+  /* Keep the header below the iPhone notch and make it fully opaque */
+  .header-row {
+    position: sticky;
+    top: 0;
+    padding-top: calc(12px + var(--safe-top));
+    padding-bottom: 12px;
+    background: rgba(11, 11, 21, 0.95) !important;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    z-index: 1002;
+  }
+
+  /* Hide the left-edge nav on small screens */
+  .nav-left-only {
+    display: none !important;
+  }
+
+  /* Keep search centered and within screen width */
+  .search-form {
+    width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+
+  .search {
+    width: clamp(240px, 92vw, 560px);
+    border-radius: 16px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+  }
+
+  .hint {
+    left: 16px;
+    margin-top: 8px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  /* Ensure cards start below sticky header */
+  .page,
+  .card-row {
+    padding-top: calc(16px + var(--safe-top));
+  }
+}
+
+/* Small phones */
+@media (max-width: 420px) {
+  .search {
+    width: 94vw;
+  }
+}

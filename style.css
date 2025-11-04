@@ -49,6 +49,18 @@ body {
   z-index: 1001;
 }
 
+.nav-right-only {
+  position: fixed;
+  top: 0;              
+  right: 0;             
+  background: rgb(255, 255, 255);
+  padding: 12px 24px;
+  border-radius: 12px 0 0 12px;  
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  z-index: 1001;
+}
+
 /* title text inside the left nav */
 .title {
   color: #fff;
@@ -350,3 +362,4 @@ body.scrolled .hint {
     aspect-ratio: 3 / 4;
   }
 }
+
